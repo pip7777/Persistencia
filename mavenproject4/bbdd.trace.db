@@ -1,0 +1,4 @@
+2023-11-17 21:15:51.465904+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table departamento ( id_depto integer auto_increment not null, nom_depto char (32) not null, id_sede integer not null, primary key (id_depto),foreign key [*]fk_depto_sede (id_sede) references sede (id_sede) );"; se esperaba "("
+Syntax error in SQL statement "create table departamento ( id_depto integer auto_increment not null, nom_depto char (32) not null, id_sede integer not null, primary key (id_depto),foreign key [*]fk_depto_sede (id_sede) references sede (id_sede) );"; expected "("; SQL statement:
+create table departamento ( id_depto integer auto_increment not null, nom_depto char (32) not null, id_sede integer not null, primary key (id_depto),foreign key fk_depto_sede (id_sede) references sede (id_sede) ); [42001-224]
