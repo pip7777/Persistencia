@@ -21,12 +21,14 @@ public class Mavenproject4 {
     {
         System.out.println("Conectando....");
         
-        String url = "jdbc:h2:" + Path.of("bbdd").toAbsolutePath().toString();
+        String urlH2    = "jdbc:h2:" + Path.of("bbdd").toAbsolutePath().toString();
+        String urlMySQL = "jdbc:mysql://localhost:3306/prueba?zeroDateTimeBehavior=CONVERT_TO_NULL";
         String user = "user";
         String pass = "root";
         
         // 0. Crear Connexion
-        Connection conn = H2Connector.newInstance(url,user,pass);
+        // Connection conn = H2Connector.newInstance(urlH2,user,pass);
+        Connection conn = H2Connector.newInstance(urlMySQL,"root","");
         
         try
         {
