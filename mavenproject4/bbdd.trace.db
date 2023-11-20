@@ -2,3 +2,7 @@
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table departamento ( id_depto integer auto_increment not null, nom_depto char (32) not null, id_sede integer not null, primary key (id_depto),foreign key [*]fk_depto_sede (id_sede) references sede (id_sede) );"; se esperaba "("
 Syntax error in SQL statement "create table departamento ( id_depto integer auto_increment not null, nom_depto char (32) not null, id_sede integer not null, primary key (id_depto),foreign key [*]fk_depto_sede (id_sede) references sede (id_sede) );"; expected "("; SQL statement:
 create table departamento ( id_depto integer auto_increment not null, nom_depto char (32) not null, id_sede integer not null, primary key (id_depto),foreign key fk_depto_sede (id_sede) references sede (id_sede) ); [42001-224]
+2023-11-20 17:35:41.601212+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "PERSONAS" ya existe
+Table "PERSONAS" already exists; SQL statement:
+CREATE TABLE Personas( id INTEGER PRIMARY KEY AUTO_INCREMENT, nombre VARCHAR(50) NOT NULL ) [42101-224]
