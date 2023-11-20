@@ -40,20 +40,22 @@ public class Mavenproject4 {
             crear = "create table sede( id_sede integer auto_increment not null, nom_sede char (20) not null, primary key (id_sede) );";
             estado.execute( crear );            
             
-            crear = "create table departamento ( id_depto integer auto_increment not null, nom_depto char (32) not null, id_sede integer not null, primary key (id_depto), CONSTRAINT fk_depto_sede foreign key (id_sede) references sede (id_sede) );";
+            crear = "create table departamento ( id_depto integer auto_increment not null, nom_depto char (32) not null, id_sede integer not null, primary key (id_depto), CONSTRAINT fk_depto_sede foreign key  (id_sede) references sede (id_sede) );";
             estado.execute( crear );            
             
-            crear = "create table empleado ( dni char(9) not null,nom_emp char (40) not null,id_depto integer not null, primary key (dni), CONSTRAINT fk_empleado_depto foreign key (id_depto) references departamento (id_depto) );";
+            crear = "create table empleado ( dni char(9) not null,nom_emp char (40) not null,id_depto integer not null, primary key (dni),CONSTRAINT fk_empleado_depto foreign key  (id_depto) references departamento (id_depto) );";
             estado.execute( crear );            
             
-            crear = "create table empleado_datos_prof (dni char(9) not null,categoria char (2) not null,sueldo_bruto_anual decimal(8,2),primary key (dni), CONSTRAINT fk_empleado_datosprof_empl foreign key  (dni) references empleado (dni) );";
+            crear = "create table empleado_datos_prof (dni char(9) not null,categoria char (2) not null,sueldo_bruto_anual decimal(8,2),primary key (dni), CONSTRAINT fk_empleado_datosprof_empl foreign key (dni) references empleado (dni) );";
             estado.execute( crear );            
             
-            crear = "create table proyecto (id_proy integer auto_increment not null,f_inicio date not null,f_fin date,nom_proy char (20) not null,primary key (id_proy)";
+            crear = "create table proyecto ( id_proy integer auto_increment not null, f_inicio date not null, f_fin date, nom_proy char (20) not null, primary key (id_proy) );";
             estado.execute( crear );            
             
-            crear = "create table proyecto_sede ( id_proy integer not null, id_sede integer not null, f_inicio date not null,f_fin date,primary key (id_proy, id_sede), CONSTRAINT fk_proysede_proy foreign key (id_proy) references proyecto (id_proy), CONSTRAINT fk_proysede_sede foreign key  (id_sede) references sede (id_sede) ); ";
+            crear = "create table proyecto_sede ( id_proy integer not null, id_sede integer not null, f_inicio date not null, f_fin date, CONSTRAINT pk_proyecto primary key (id_proy, id_sede),CONSTRAINT fk_proysede_proy foreign key (id_proy) references proyecto (id_proy),CONSTRAINT fk_proysede_sede foreign key (id_sede) references sede (id_sede) ); ";
             estado.execute( crear );            
+            
+            System.out.println("Base de datos creada con éxito.");        
             
             // 3. INSERTAR DATOS
             String insert = "INSERT INTO Personas( nombre ) VALUES ('Pepe')";
