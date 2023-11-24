@@ -22,7 +22,7 @@ public class Mavenproject4 {
         System.out.println("Conectando....");
         
         String urlH2    = "jdbc:h2:" + Path.of("bbdd").toAbsolutePath().toString();
-        String urlMySQL = "jdbc:mysql://localhost:3306/prueba?zeroDateTimeBehavior=CONVERT_TO_NULL";
+        String urlMySQL = "jdbc:mysql://localhost:3306/pruebas?zeroDateTimeBehavior=CONVERT_TO_NULL";
         String user = "user";
         String pass = "root";
         
