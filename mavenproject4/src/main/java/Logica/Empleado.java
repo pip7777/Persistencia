@@ -24,9 +24,9 @@ import java.io.Serializable;
 @Entity
 @Table(name = "empleado", catalog = "pruebas", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "Empleado_1.findAll", query = "SELECT e FROM Empleado_1 e"),
-    @NamedQuery(name = "Empleado_1.findByDni", query = "SELECT e FROM Empleado_1 e WHERE e.dni = :dni"),
-    @NamedQuery(name = "Empleado_1.findByNomEmp", query = "SELECT e FROM Empleado_1 e WHERE e.nomEmp = :nomEmp")})
+    @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e"),
+    @NamedQuery(name = "Empleado.findByDni", query = "SELECT e FROM Empleado e WHERE e.dni = :dni"),
+    @NamedQuery(name = "Empleado.findByNomEmp", query = "SELECT e FROM Empleado e WHERE e.nomEmp = :nomEmp")})
 public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -109,7 +109,7 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "Logica.Empleado_1[ dni=" + dni + " ]";
+        return "Logica.Empleado[ dni=" + dni + " ]";
     }
     
 }

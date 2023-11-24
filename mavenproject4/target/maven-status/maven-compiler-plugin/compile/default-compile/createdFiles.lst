@@ -1,18 +1,13 @@
 Controllers\ProyectoJpaController.class
-Logica\Proyecto_1.class
 Logica\Sede.class
-Logica\ProyectoSede_1.class
 com\mycompany\mavenproject4\H2Connector.class
 Controllers\EmpleadoDatosProfJpaController.class
-Logica\Empleado_1.class
 Logica\Proyecto_.class
 com\mycompany\mavenproject4\Mavenproject4.class
 Controllers\DepartamentoJpaController.class
 Logica\Proyecto.class
 Logica\Personas.class
 Logica\ProyectoSede_.class
-Logica\EmpleadoDatosProf_1.class
-Logica\Sede_1.class
 Controllers\exceptions\IllegalOrphanException.class
 Controllers\EmpleadoJpaController.class
 Logica\ProyectoSedePK_.class
@@ -20,7 +15,6 @@ com\mycompany\mavenproject4\exceptions\NonexistentEntityException.class
 Controllers\exceptions\PreexistingEntityException.class
 Logica\Departamento_.class
 Controllers\PersonasJpaController.class
-Logica\Departamento_1.class
 Logica\ProyectoSedePK.class
 com\mycompany\mavenproject4\MySQLConnector.class
 Logica\Empleado.class
@@ -35,5 +29,4 @@ Controllers\SedeJpaController.class
 Logica\Departamento.class
 Logica\Empleado_.class
 Logica\Personas_.class
-Logica\Personas_1.class
 Logica\EmpleadoDatosProf.class
