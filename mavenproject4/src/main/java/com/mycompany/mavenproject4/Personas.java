@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package com.mycompany.mavenproject4;
 
+import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,14 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 /**
  *
- * @author Pablo
+ * @author administrador
  */
 @Entity
-@Table(catalog = "pruebas", schema = "")
+@Table(name = "Personas")
 @NamedQueries({
     @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Personas p"),
     @NamedQuery(name = "Personas.findById", query = "SELECT p FROM Personas p WHERE p.id = :id"),
@@ -31,10 +31,10 @@ public class Personas implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(nullable = false, length = 50)
+    @Column(name = "nombre")
     private String nombre;
 
     public Personas() {
@@ -87,7 +87,7 @@ public class Personas implements Serializable {
 
     @Override
     public String toString() {
-        return "Logica.Personas[ id=" + id + " ]";
+        return "com.mycompany.mavenproject4.Personas[ id=" + id + " ]";
     }
     
 }

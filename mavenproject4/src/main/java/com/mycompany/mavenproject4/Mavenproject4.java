@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
- */
-
 package com.mycompany.mavenproject4;
 
-import Controllers.EmpleadoJpaController;
+import com.mycompany.mavenproject4.exceptions.NonexistentEntityException;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.nio.file.Path;
@@ -14,10 +9,6 @@ import java.sql.ResultSet;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-/**
- *
- * @author administrador
- */
 public class Mavenproject4 {
 
     public static void main(String[] args) 
@@ -25,23 +16,34 @@ public class Mavenproject4 {
         System.out.println("Conectando....");
         
         String urlH2    = "jdbc:h2:" + Path.of("bbdd").toAbsolutePath().toString();
-        String urlMySQL = "jdbc:mysql://localhost:3306/pruebas?zeroDateTimeBehavior=CONVERT_TO_NULL";
+        String urlMySQL = "jdbc:mysql://localhost:3306/prueba?zeroDateTimeBehavior=CONVERT_TO_NULL";
         String user = "user";
         String pass = "root";
         
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("proj4_persistence"); 
-        EmpleadoJpaController emp = new EmpleadoJpaController(emf);
-        
-        System.out.println( "Empleados : " + emp.getEmpleadoCount() );
+        // EntityManagerFactory emf = Persistence.createEntityManagerFactory("proj4_persistence"); 
+        // EmpleadoJpaController emp = new EmpleadoJpaController(emf);
+        // System.out.println( "Empleados : " + emp.getEmpleadoCount() );
         
         // 0. Crear Connexion
         // Connection conn = H2Connector.newInstance(urlH2,user,pass);
         Connection conn = H2Connector.newInstance(urlMySQL,"root","");
         
+        // 0. Crear EntityManagerFactory 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadJPA");
+                
         try
         {
+            
             // 1. Crear Estado
             Statement estado = conn.createStatement();
+        
+            // 1. Creo el Controller
+            PersonasJpaController cont = new PersonasJpaController( emf );
+            
+            Personas per = new Personas();
+            per.setNombre("Maria");
+            per.setId(1000);
+            cont.edit(per);
             
             // 2. Crear TABLA
             String crear = "CREATE TABLE IF NOT EXISTS Personas( id INTEGER PRIMARY KEY AUTO_INCREMENT, nombre VARCHAR(50) NOT NULL )";
@@ -90,8 +92,13 @@ public class Mavenproject4 {
             // 5. Cerrar Connexión
             estado.close();
             conn.close();
+        }        
+        catch( SQLException ex )
+        {
+            System.out.println("Error creando la conexión" + ex.getMessage() );
+            return;
         }
-        catch(SQLException ex)
+        catch( Exception ex )
         {
             System.out.println("Error creando la conexión" + ex.getMessage() );
             return;
