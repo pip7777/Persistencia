@@ -9,9 +9,16 @@
     <class>Logica.Departamento</class>
     <class>Logica.ProyectoSede</class>
     <class>Logica.EmpleadoDatosProf</class>
+    <class>com.mycompany.mavenproject4.Personas</class>
+    <class>com.mycompany.mavenproject4.Empleado</class>
+    <class>com.mycompany.mavenproject4.Proyecto</class>
+    <class>com.mycompany.mavenproject4.Sede</class>
+    <class>com.mycompany.mavenproject4.ProyectoSede</class>
+    <class>com.mycompany.mavenproject4.EmpleadoDatosProf</class>
+    <class>com.mycompany.mavenproject4.Departamento</class>
     <validation-mode>NONE</validation-mode>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/pruebas?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/prueba?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value=""/>
