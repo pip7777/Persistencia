@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package com.mycompany.mavenproject4;
 
+import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,15 +17,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.util.Collection;
 
 /**
  *
- * @author Pablo
+ * @author dam2
  */
 @Entity
-@Table(catalog = "pruebas", schema = "")
+@Table(name = "sede")
 @NamedQueries({
     @NamedQuery(name = "Sede.findAll", query = "SELECT s FROM Sede s"),
     @NamedQuery(name = "Sede.findByIdSede", query = "SELECT s FROM Sede s WHERE s.idSede = :idSede"),
@@ -34,10 +34,10 @@ public class Sede implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_sede", nullable = false)
+    @Column(name = "id_sede")
     private Integer idSede;
     @Basic(optional = false)
-    @Column(name = "nom_sede", nullable = false, length = 20)
+    @Column(name = "nom_sede")
     private String nomSede;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sede")
     private Collection<ProyectoSede> proyectoSedeCollection;
@@ -110,7 +110,7 @@ public class Sede implements Serializable {
 
     @Override
     public String toString() {
-        return "Logica.Sede[ idSede=" + idSede + " ]";
+        return "com.mycompany.mavenproject4.Sede[ idSede=" + idSede + " ]";
     }
     
 }

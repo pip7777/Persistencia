@@ -2,17 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
  */
-
 package com.mycompany.mavenproject4;
 
-import Controllers.EmpleadoJpaController;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.nio.file.Path;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.Scanner;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.eclipse.persistence.jpa.jpql.Assert;
 
 /**
  *
@@ -20,85 +21,149 @@ import javax.persistence.Persistence;
  */
 public class Mavenproject4 {
 
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args) throws Exception {
+        Scanner entrada = new Scanner(System.in);
         System.out.println("Conectando....");
-        
-        String urlH2    = "jdbc:h2:" + Path.of("bbdd").toAbsolutePath().toString();
-        String urlMySQL = "jdbc:mysql://localhost:3306/pruebas?zeroDateTimeBehavior=CONVERT_TO_NULL";
+
+        String urlH2 = "jdbc:h2:" + Path.of("bbdd").toAbsolutePath().toString();
+        String urlMySQL = "jdbc:mysql://localhost:3306/prueba?zeroDateTimeBehavior=CONVERT_TO_NULL";
         String user = "user";
         String pass = "root";
-        
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("proj4_persistence"); 
-        EmpleadoJpaController emp = new EmpleadoJpaController(emf);
-        
-        System.out.println( "Empleados : " + emp.getEmpleadoCount() );
-        
-        // 0. Crear Connexion
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadJPA");
+
+        // Crear Connexion
         // Connection conn = H2Connector.newInstance(urlH2,user,pass);
-        Connection conn = H2Connector.newInstance(urlMySQL,"root","");
-        
-        try
-        {
-            // 1. Crear Estado
-            Statement estado = conn.createStatement();
-            
-            // 2. Crear TABLA
-            String crear = "CREATE TABLE IF NOT EXISTS Personas( id INTEGER PRIMARY KEY AUTO_INCREMENT, nombre VARCHAR(50) NOT NULL )";
-            estado.execute( crear );            
-            
-            crear = "create table IF NOT EXISTS sede( id_sede integer auto_increment not null, nom_sede char (20) not null, primary key (id_sede) );";
-            estado.execute( crear );            
-            
-            crear = "create table IF NOT EXISTS departamento ( id_depto integer auto_increment not null, nom_depto char (32) not null, id_sede integer not null, primary key (id_depto), CONSTRAINT fk_depto_sede foreign key  (id_sede) references sede (id_sede) );";
-            estado.execute( crear );            
-            
-            crear = "create table IF NOT EXISTS empleado ( dni char(9) not null,nom_emp char (40) not null,id_depto integer not null, primary key (dni),CONSTRAINT fk_empleado_depto foreign key  (id_depto) references departamento (id_depto) );";
-            estado.execute( crear );            
-            
-            crear = "create table IF NOT EXISTS empleado_datos_prof (dni char(9) not null,categoria char (2) not null,sueldo_bruto_anual decimal(8,2),primary key (dni), CONSTRAINT fk_empleado_datosprof_empl foreign key (dni) references empleado (dni) );";
-            estado.execute( crear );            
-            
-            crear = "create table IF NOT EXISTS proyecto ( id_proy integer auto_increment not null, f_inicio date not null, f_fin date, nom_proy char (20) not null, primary key (id_proy) );";
-            estado.execute( crear );            
-            
-            crear = "create table IF NOT EXISTS proyecto_sede ( id_proy integer not null, id_sede integer not null, f_inicio date not null, f_fin date, CONSTRAINT pk_proyecto primary key (id_proy, id_sede),CONSTRAINT fk_proysede_proy foreign key (id_proy) references proyecto (id_proy),CONSTRAINT fk_proysede_sede foreign key (id_sede) references sede (id_sede) ); ";
-            estado.execute( crear );            
-            
-            System.out.println("Base de datos creada/actualizada con éxito.");        
-            
-            // 3. INSERTAR DATOS
-            String insert = "INSERT INTO Personas( nombre ) VALUES ('Pepe')";
-            estado.execute( insert );
-            insert = "INSERT INTO Personas( nombre ) VALUES ('Juan')";
-            estado.execute( insert );
-            insert = "INSERT INTO Personas( nombre ) VALUES ('Manolo')";
-            estado.execute( insert );
-            
-            System.out.println("Datos insertados con éxito.");        
-            
-            // 4. INSERTAR DATOS 
-            String buscar = "SELECT id, nombre from Personas";
-            ResultSet set = estado.executeQuery( buscar );
-            
-            while( !set.isLast() )
-            {
-                set.next();                
-                System.out.println(" NOMBRE : " + set.getString(2) );            
+        Connection conn = H2Connector.newInstance(urlMySQL, "root", "");
+        Statement estado = conn.createStatement();
+
+        //controladores
+        DepartamentoJpaController dpaCont = new DepartamentoJpaController(emf);
+        EmpleadoJpaController emp = new EmpleadoJpaController(emf);
+        PersonasJpaController cont = new PersonasJpaController(emf);
+
+        boolean control = true;
+        while (control) {
+
+            //menu
+            System.out.println("***Menu***");
+            System.out.println("¿sobre que tabla vamos a actuar?");
+            System.out.println("1: Empleado");
+            System.out.println("2: Continuará");
+            int op;
+            op = entrada.nextInt();
+            switch (op) {
+                case 1:
+                    //menu de empleados
+                    entrada.nextLine();
+                    System.out.println("Opciones en empleados: ");
+                    System.out.println("1: Mostrar empleados");
+                    System.out.println("2: Crear un empleado");
+                    System.out.println("3: Editar un empleado");
+                    System.out.println("4: Mostrar un empleado");
+                    System.out.println("5: Eliminar un empleado");
+                    System.out.println("6: Contar empleados");
+                    System.out.println("7: salir");
+                    op = entrada.nextInt();
+                    switch (op) {
+                        case 1:
+                            //Mostrar empleados
+                            List<Empleado> listaEmpleados = emp.findEmpleadoEntities();
+                            System.out.println("Empleados:");
+                            for (Empleado empleado : listaEmpleados) {
+                                System.out.println(empleado);
+                            }
+                            break;
+                        case 2:
+                            //Crear empleados
+                            entrada.nextLine();
+                            Empleado empleado = new Empleado();
+                            System.out.println("Introduzca el DNI");
+                            String dni = entrada.nextLine();
+                            empleado.setDni(dni);
+                            entrada.nextLine();
+                            System.out.println("Introduzca el nombre y los apellidos");
+                            String nombreApellidos = entrada.nextLine();
+                            empleado.setNomEmp(nombreApellidos);
+                            System.out.println("Introduzca el departamento al que pertenece ");
+                            int idDepartamento = entrada.nextInt();
+                            Departamento depto = dpaCont.findDepartamento(idDepartamento);
+                            empleado.setIdDepto(depto);
+                            try {
+                                emp.create(empleado);
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+                            System.out.println("Hecho");
+                            break;
+                        case 3:
+                            //Editar empleados
+                            Empleado ampleadoAactualizar = new Empleado();
+                            entrada.nextLine();
+                            System.out.println("Dime el DNI del empleado a actualizar.");
+                            dni = entrada.nextLine();
+                            Empleado empleadoactualizado = emp.findEmpleado(dni);
+                            System.out.println("Introduce el nombre actualizado.");
+                            nombreApellidos = entrada.nextLine();
+                            empleadoactualizado.setNomEmp(nombreApellidos);
+                            try {
+                                emp.edit(empleadoactualizado);
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+                            System.out.println("Hecho");
+
+                            break;
+                        case 4:
+                            //Mostrar un empleado
+                            entrada.nextLine();
+                            System.out.println("introduzca el DNI del empleadpo");
+                            dni = entrada.nextLine();
+                            entrada.nextLine();
+                            Empleado encontrarEmp = emp.findEmpleado(dni);
+                            System.out.println(encontrarEmp.toString());
+                            break;
+                        case 5:
+                            //Eliminar un empleado
+                            entrada.nextLine();
+                            System.out.println("introduzca el DNI del empleadpo");
+                            dni = entrada.nextLine();
+                            try {
+                                emp.destroy(dni);
+                            } catch (Exception e) {
+                                System.out.println(e);
+                            }
+                            System.out.println("hecho");
+                            break;
+                        case 6:
+                            //Contar empleados 
+                            int totalEmpl = emp.getEmpleadoCount();
+                            System.out.println("En total hay " + totalEmpl + " empleados.");
+                            break;
+                        case 7:
+                            //salir de este menu
+                            control = false;
+                            break;
+                    }
+
+                case 2:
+                    control = false;
+                    break;
+
+                default:
+                    throw new AssertionError();
             }
-            
-            // 5. Cerrar Connexión
+        }
+
+        try {
             estado.close();
             conn.close();
-        }
-        catch(SQLException ex)
-        {
-            System.out.println("Error creando la conexión" + ex.getMessage() );
+        } catch (SQLException ex) {
+            System.out.println("Error creando la conexión" + ex.getMessage());
             return;
         }
-        
+
         System.out.println("Conexion cerrada con éxito");
-        
-        
+
     }
 }

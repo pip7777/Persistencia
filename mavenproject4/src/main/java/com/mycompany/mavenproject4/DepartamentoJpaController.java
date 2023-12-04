@@ -2,18 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controllers;
+package com.mycompany.mavenproject4;
 
-import Logica.Departamento;
+import com.mycompany.mavenproject4.exceptions.IllegalOrphanException;
+import com.mycompany.mavenproject4.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import Logica.Sede;
-import Logica.Empleado;
-import com.mycompany.mavenproject4.exceptions.IllegalOrphanException;
-import com.mycompany.mavenproject4.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -22,7 +19,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Pablo
+ * @author dam2
  */
 public class DepartamentoJpaController implements Serializable {
 
@@ -49,9 +46,9 @@ public class DepartamentoJpaController implements Serializable {
                 departamento.setIdSede(idSede);
             }
             Collection<Empleado> attachedEmpleadoCollection = new ArrayList<Empleado>();
-            for (Empleado empleadoCollectionEmpleado_1ToAttach : departamento.getEmpleadoCollection()) {
-                empleadoCollectionEmpleado_1ToAttach = em.getReference(empleadoCollectionEmpleado_1ToAttach.getClass(), empleadoCollectionEmpleado_1ToAttach.getDni());
-                attachedEmpleadoCollection.add(empleadoCollectionEmpleado_1ToAttach);
+            for (Empleado empleadoCollectionEmpleadoToAttach : departamento.getEmpleadoCollection()) {
+                empleadoCollectionEmpleadoToAttach = em.getReference(empleadoCollectionEmpleadoToAttach.getClass(), empleadoCollectionEmpleadoToAttach.getDni());
+                attachedEmpleadoCollection.add(empleadoCollectionEmpleadoToAttach);
             }
             departamento.setEmpleadoCollection(attachedEmpleadoCollection);
             em.persist(departamento);
@@ -59,13 +56,13 @@ public class DepartamentoJpaController implements Serializable {
                 idSede.getDepartamentoCollection().add(departamento);
                 idSede = em.merge(idSede);
             }
-            for (Empleado empleadoCollectionEmpleado_1 : departamento.getEmpleadoCollection()) {
-                Departamento oldIdDeptoOfEmpleadoCollectionEmpleado_1 = empleadoCollectionEmpleado_1.getIdDepto();
-                empleadoCollectionEmpleado_1.setIdDepto(departamento);
-                empleadoCollectionEmpleado_1 = em.merge(empleadoCollectionEmpleado_1);
-                if (oldIdDeptoOfEmpleadoCollectionEmpleado_1 != null) {
-                    oldIdDeptoOfEmpleadoCollectionEmpleado_1.getEmpleadoCollection().remove(empleadoCollectionEmpleado_1);
-                    oldIdDeptoOfEmpleadoCollectionEmpleado_1 = em.merge(oldIdDeptoOfEmpleadoCollectionEmpleado_1);
+            for (Empleado empleadoCollectionEmpleado : departamento.getEmpleadoCollection()) {
+                Departamento oldIdDeptoOfEmpleadoCollectionEmpleado = empleadoCollectionEmpleado.getIdDepto();
+                empleadoCollectionEmpleado.setIdDepto(departamento);
+                empleadoCollectionEmpleado = em.merge(empleadoCollectionEmpleado);
+                if (oldIdDeptoOfEmpleadoCollectionEmpleado != null) {
+                    oldIdDeptoOfEmpleadoCollectionEmpleado.getEmpleadoCollection().remove(empleadoCollectionEmpleado);
+                    oldIdDeptoOfEmpleadoCollectionEmpleado = em.merge(oldIdDeptoOfEmpleadoCollectionEmpleado);
                 }
             }
             em.getTransaction().commit();
@@ -87,12 +84,12 @@ public class DepartamentoJpaController implements Serializable {
             Collection<Empleado> empleadoCollectionOld = persistentDepartamento.getEmpleadoCollection();
             Collection<Empleado> empleadoCollectionNew = departamento.getEmpleadoCollection();
             List<String> illegalOrphanMessages = null;
-            for (Empleado empleadoCollectionOldEmpleado_1 : empleadoCollectionOld) {
-                if (!empleadoCollectionNew.contains(empleadoCollectionOldEmpleado_1)) {
+            for (Empleado empleadoCollectionOldEmpleado : empleadoCollectionOld) {
+                if (!empleadoCollectionNew.contains(empleadoCollectionOldEmpleado)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Empleado_1 " + empleadoCollectionOldEmpleado_1 + " since its idDepto field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Empleado " + empleadoCollectionOldEmpleado + " since its idDepto field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -103,9 +100,9 @@ public class DepartamentoJpaController implements Serializable {
                 departamento.setIdSede(idSedeNew);
             }
             Collection<Empleado> attachedEmpleadoCollectionNew = new ArrayList<Empleado>();
-            for (Empleado empleadoCollectionNewEmpleado_1ToAttach : empleadoCollectionNew) {
-                empleadoCollectionNewEmpleado_1ToAttach = em.getReference(empleadoCollectionNewEmpleado_1ToAttach.getClass(), empleadoCollectionNewEmpleado_1ToAttach.getDni());
-                attachedEmpleadoCollectionNew.add(empleadoCollectionNewEmpleado_1ToAttach);
+            for (Empleado empleadoCollectionNewEmpleadoToAttach : empleadoCollectionNew) {
+                empleadoCollectionNewEmpleadoToAttach = em.getReference(empleadoCollectionNewEmpleadoToAttach.getClass(), empleadoCollectionNewEmpleadoToAttach.getDni());
+                attachedEmpleadoCollectionNew.add(empleadoCollectionNewEmpleadoToAttach);
             }
             empleadoCollectionNew = attachedEmpleadoCollectionNew;
             departamento.setEmpleadoCollection(empleadoCollectionNew);
@@ -118,14 +115,14 @@ public class DepartamentoJpaController implements Serializable {
                 idSedeNew.getDepartamentoCollection().add(departamento);
                 idSedeNew = em.merge(idSedeNew);
             }
-            for (Empleado empleadoCollectionNewEmpleado_1 : empleadoCollectionNew) {
-                if (!empleadoCollectionOld.contains(empleadoCollectionNewEmpleado_1)) {
-                    Departamento oldIdDeptoOfEmpleadoCollectionNewEmpleado_1 = empleadoCollectionNewEmpleado_1.getIdDepto();
-                    empleadoCollectionNewEmpleado_1.setIdDepto(departamento);
-                    empleadoCollectionNewEmpleado_1 = em.merge(empleadoCollectionNewEmpleado_1);
-                    if (oldIdDeptoOfEmpleadoCollectionNewEmpleado_1 != null && !oldIdDeptoOfEmpleadoCollectionNewEmpleado_1.equals(departamento)) {
-                        oldIdDeptoOfEmpleadoCollectionNewEmpleado_1.getEmpleadoCollection().remove(empleadoCollectionNewEmpleado_1);
-                        oldIdDeptoOfEmpleadoCollectionNewEmpleado_1 = em.merge(oldIdDeptoOfEmpleadoCollectionNewEmpleado_1);
+            for (Empleado empleadoCollectionNewEmpleado : empleadoCollectionNew) {
+                if (!empleadoCollectionOld.contains(empleadoCollectionNewEmpleado)) {
+                    Departamento oldIdDeptoOfEmpleadoCollectionNewEmpleado = empleadoCollectionNewEmpleado.getIdDepto();
+                    empleadoCollectionNewEmpleado.setIdDepto(departamento);
+                    empleadoCollectionNewEmpleado = em.merge(empleadoCollectionNewEmpleado);
+                    if (oldIdDeptoOfEmpleadoCollectionNewEmpleado != null && !oldIdDeptoOfEmpleadoCollectionNewEmpleado.equals(departamento)) {
+                        oldIdDeptoOfEmpleadoCollectionNewEmpleado.getEmpleadoCollection().remove(empleadoCollectionNewEmpleado);
+                        oldIdDeptoOfEmpleadoCollectionNewEmpleado = em.merge(oldIdDeptoOfEmpleadoCollectionNewEmpleado);
                     }
                 }
             }
@@ -160,11 +157,11 @@ public class DepartamentoJpaController implements Serializable {
             }
             List<String> illegalOrphanMessages = null;
             Collection<Empleado> empleadoCollectionOrphanCheck = departamento.getEmpleadoCollection();
-            for (Empleado empleadoCollectionOrphanCheckEmpleado_1 : empleadoCollectionOrphanCheck) {
+            for (Empleado empleadoCollectionOrphanCheckEmpleado : empleadoCollectionOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Departamento (" + departamento + ") cannot be destroyed since the Empleado_1 " + empleadoCollectionOrphanCheckEmpleado_1 + " in its empleadoCollection field has a non-nullable idDepto field.");
+                illegalOrphanMessages.add("This Departamento (" + departamento + ") cannot be destroyed since the Empleado " + empleadoCollectionOrphanCheckEmpleado + " in its empleadoCollection field has a non-nullable idDepto field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
@@ -211,6 +208,14 @@ public class DepartamentoJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             return em.find(Departamento.class, id);
+        } finally {
+            em.close();
+        }
+    }
+    public Departamento findDepartamentoName(String Nombre) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Departamento.class, Nombre);
         } finally {
             em.close();
         }

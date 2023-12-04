@@ -2,9 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controllers;
+package com.mycompany.mavenproject4;
 
-import Logica.Personas;
 import com.mycompany.mavenproject4.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -17,7 +16,7 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author Pablo
+ * @author dam2
  */
 public class PersonasJpaController implements Serializable {
 

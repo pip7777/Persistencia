@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package com.mycompany.mavenproject4;
 
+import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -15,15 +17,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
- * @author Pablo
+ * @author dam2
  */
 @Entity
-@Table(name = "proyecto_sede", catalog = "pruebas", schema = "")
+@Table(name = "proyecto_sede")
 @NamedQueries({
     @NamedQuery(name = "ProyectoSede.findAll", query = "SELECT p FROM ProyectoSede p"),
     @NamedQuery(name = "ProyectoSede.findByIdProy", query = "SELECT p FROM ProyectoSede p WHERE p.proyectoSedePK.idProy = :idProy"),
@@ -36,16 +36,16 @@ public class ProyectoSede implements Serializable {
     @EmbeddedId
     protected ProyectoSedePK proyectoSedePK;
     @Basic(optional = false)
-    @Column(name = "f_inicio", nullable = false)
+    @Column(name = "f_inicio")
     @Temporal(TemporalType.DATE)
     private Date fInicio;
     @Column(name = "f_fin")
     @Temporal(TemporalType.DATE)
     private Date fFin;
-    @JoinColumn(name = "id_proy", referencedColumnName = "id_proy", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "id_proy", referencedColumnName = "id_proy", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Proyecto proyecto;
-    @JoinColumn(name = "id_sede", referencedColumnName = "id_sede", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "id_sede", referencedColumnName = "id_sede", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Sede sede;
 
@@ -127,7 +127,7 @@ public class ProyectoSede implements Serializable {
 
     @Override
     public String toString() {
-        return "Logica.ProyectoSede[ proyectoSedePK=" + proyectoSedePK + " ]";
+        return "com.mycompany.mavenproject4.ProyectoSede[ proyectoSedePK=" + proyectoSedePK + " ]";
     }
     
 }

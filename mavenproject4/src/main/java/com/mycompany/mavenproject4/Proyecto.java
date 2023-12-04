@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package com.mycompany.mavenproject4;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,16 +20,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
 
 /**
  *
- * @author Pablo
+ * @author dam2
  */
 @Entity
-@Table(catalog = "pruebas", schema = "")
+@Table(name = "proyecto")
 @NamedQueries({
     @NamedQuery(name = "Proyecto.findAll", query = "SELECT p FROM Proyecto p"),
     @NamedQuery(name = "Proyecto.findByIdProy", query = "SELECT p FROM Proyecto p WHERE p.idProy = :idProy"),
@@ -39,17 +39,17 @@ public class Proyecto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_proy", nullable = false)
+    @Column(name = "id_proy")
     private Integer idProy;
     @Basic(optional = false)
-    @Column(name = "f_inicio", nullable = false)
+    @Column(name = "f_inicio")
     @Temporal(TemporalType.DATE)
     private Date fInicio;
     @Column(name = "f_fin")
     @Temporal(TemporalType.DATE)
     private Date fFin;
     @Basic(optional = false)
-    @Column(name = "nom_proy", nullable = false, length = 20)
+    @Column(name = "nom_proy")
     private String nomProy;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proyecto")
     private Collection<ProyectoSede> proyectoSedeCollection;
@@ -129,7 +129,7 @@ public class Proyecto implements Serializable {
 
     @Override
     public String toString() {
-        return "Logica.Proyecto[ idProy=" + idProy + " ]";
+        return "com.mycompany.mavenproject4.Proyecto[ idProy=" + idProy + " ]";
     }
     
 }

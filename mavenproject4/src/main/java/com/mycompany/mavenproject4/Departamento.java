@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package com.mycompany.mavenproject4;
 
+import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,15 +19,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.util.Collection;
 
 /**
  *
- * @author Pablo
+ * @author dam2
  */
 @Entity
-@Table(catalog = "pruebas", schema = "")
+@Table(name = "departamento")
 @NamedQueries({
     @NamedQuery(name = "Departamento.findAll", query = "SELECT d FROM Departamento d"),
     @NamedQuery(name = "Departamento.findByIdDepto", query = "SELECT d FROM Departamento d WHERE d.idDepto = :idDepto"),
@@ -36,14 +36,14 @@ public class Departamento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_depto", nullable = false)
+    @Column(name = "id_depto")
     private Integer idDepto;
     @Basic(optional = false)
-    @Column(name = "nom_depto", nullable = false, length = 32)
+    @Column(name = "nom_depto")
     private String nomDepto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepto")
     private Collection<Empleado> empleadoCollection;
-    @JoinColumn(name = "id_sede", referencedColumnName = "id_sede", nullable = false)
+    @JoinColumn(name = "id_sede", referencedColumnName = "id_sede")
     @ManyToOne(optional = false)
     private Sede idSede;
 
@@ -113,7 +113,7 @@ public class Departamento implements Serializable {
 
     @Override
     public String toString() {
-        return "Logica.Departamento[ idDepto=" + idDepto + " ]";
+        return "com.mycompany.mavenproject4.Departamento[ idDepto=" + idDepto + " ]";
     }
     
 }

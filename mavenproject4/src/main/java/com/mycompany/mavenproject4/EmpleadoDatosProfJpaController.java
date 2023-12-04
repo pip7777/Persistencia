@@ -2,18 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controllers;
+package com.mycompany.mavenproject4;
 
-import Logica.EmpleadoDatosProf;
+import com.mycompany.mavenproject4.exceptions.IllegalOrphanException;
+import com.mycompany.mavenproject4.exceptions.NonexistentEntityException;
+import com.mycompany.mavenproject4.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import Logica.Empleado;
-import com.mycompany.mavenproject4.exceptions.IllegalOrphanException;
-import com.mycompany.mavenproject4.exceptions.NonexistentEntityException;
-import com.mycompany.mavenproject4.exceptions.PreexistingEntityException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -21,7 +19,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Pablo
+ * @author dam2
  */
 public class EmpleadoDatosProfJpaController implements Serializable {
 
@@ -43,7 +41,7 @@ public class EmpleadoDatosProfJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("The Empleado_1 " + empleadoOrphanCheck + " already has an item of type EmpleadoDatosProf whose empleado column cannot be null. Please make another selection for the empleado field.");
+                illegalOrphanMessages.add("The Empleado " + empleadoOrphanCheck + " already has an item of type EmpleadoDatosProf whose empleado column cannot be null. Please make another selection for the empleado field.");
             }
         }
         if (illegalOrphanMessages != null) {
@@ -91,7 +89,7 @@ public class EmpleadoDatosProfJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("The Empleado_1 " + empleadoNew + " already has an item of type EmpleadoDatosProf whose empleado column cannot be null. Please make another selection for the empleado field.");
+                    illegalOrphanMessages.add("The Empleado " + empleadoNew + " already has an item of type EmpleadoDatosProf whose empleado column cannot be null. Please make another selection for the empleado field.");
                 }
             }
             if (illegalOrphanMessages != null) {

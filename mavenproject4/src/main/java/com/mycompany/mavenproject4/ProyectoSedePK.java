@@ -2,25 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package com.mycompany.mavenproject4;
 
+import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import java.io.Serializable;
 
 /**
  *
- * @author Pablo
+ * @author dam2
  */
 @Embeddable
 public class ProyectoSedePK implements Serializable {
 
     @Basic(optional = false)
-    @Column(name = "id_proy", nullable = false)
+    @Column(name = "id_proy")
     private int idProy;
     @Basic(optional = false)
-    @Column(name = "id_sede", nullable = false)
+    @Column(name = "id_sede")
     private int idSede;
 
     public ProyectoSedePK() {
@@ -73,7 +73,7 @@ public class ProyectoSedePK implements Serializable {
 
     @Override
     public String toString() {
-        return "Logica.ProyectoSedePK[ idProy=" + idProy + ", idSede=" + idSede + " ]";
+        return "com.mycompany.mavenproject4.ProyectoSedePK[ idProy=" + idProy + ", idSede=" + idSede + " ]";
     }
     
 }

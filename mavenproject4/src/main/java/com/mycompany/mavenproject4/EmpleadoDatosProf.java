@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package com.mycompany.mavenproject4;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,15 +15,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  *
- * @author Pablo
+ * @author dam2
  */
 @Entity
-@Table(name = "empleado_datos_prof", catalog = "pruebas", schema = "")
+@Table(name = "empleado_datos_prof")
 @NamedQueries({
     @NamedQuery(name = "EmpleadoDatosProf.findAll", query = "SELECT e FROM EmpleadoDatosProf e"),
     @NamedQuery(name = "EmpleadoDatosProf.findByDni", query = "SELECT e FROM EmpleadoDatosProf e WHERE e.dni = :dni"),
@@ -32,15 +32,15 @@ public class EmpleadoDatosProf implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(nullable = false, length = 9)
+    @Column(name = "dni")
     private String dni;
     @Basic(optional = false)
-    @Column(nullable = false, length = 2)
+    @Column(name = "categoria")
     private String categoria;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "sueldo_bruto_anual", precision = 8, scale = 2)
+    @Column(name = "sueldo_bruto_anual")
     private BigDecimal sueldoBrutoAnual;
-    @JoinColumn(name = "dni", referencedColumnName = "dni", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "dni", referencedColumnName = "dni", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Empleado empleado;
 
@@ -110,7 +110,7 @@ public class EmpleadoDatosProf implements Serializable {
 
     @Override
     public String toString() {
-        return "Logica.EmpleadoDatosProf[ dni=" + dni + " ]";
+        return "com.mycompany.mavenproject4.EmpleadoDatosProf[ dni=" + dni + " ]";
     }
     
 }

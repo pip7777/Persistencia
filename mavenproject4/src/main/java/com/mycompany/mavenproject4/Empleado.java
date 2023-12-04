@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package com.mycompany.mavenproject4;
 
+import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,14 +16,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 /**
  *
- * @author Pablo
+ * @author dam2
  */
 @Entity
-@Table(name = "empleado", catalog = "pruebas", schema = "")
+@Table(name = "empleado")
 @NamedQueries({
     @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e"),
     @NamedQuery(name = "Empleado.findByDni", query = "SELECT e FROM Empleado e WHERE e.dni = :dni"),
@@ -32,14 +32,14 @@ public class Empleado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(nullable = false, length = 9)
+    @Column(name = "dni")
     private String dni;
     @Basic(optional = false)
-    @Column(name = "nom_emp", nullable = false, length = 40)
+    @Column(name = "nom_emp")
     private String nomEmp;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "empleado")
     private EmpleadoDatosProf empleadoDatosProf;
-    @JoinColumn(name = "id_depto", referencedColumnName = "id_depto", nullable = false)
+    @JoinColumn(name = "id_depto", referencedColumnName = "id_depto")
     @ManyToOne(optional = false)
     private Departamento idDepto;
 
@@ -109,7 +109,7 @@ public class Empleado implements Serializable {
 
     @Override
     public String toString() {
-        return "Logica.Empleado[ dni=" + dni + " ]";
+        return "com.mycompany.mavenproject4.Empleado[ dni=" + dni + " ]";
     }
     
 }

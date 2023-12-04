@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Logica;
+package com.mycompany.mavenproject4;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,34 +17,34 @@ import java.io.Serializable;
 
 /**
  *
- * @author Pablo
+ * @author dam2
  */
 @Entity
-@Table(catalog = "pruebas", schema = "")
+@Table(name = "personas")
 @NamedQueries({
-    @NamedQuery(name = "Personas.findAll", query = "SELECT p FROM Personas p"),
-    @NamedQuery(name = "Personas.findById", query = "SELECT p FROM Personas p WHERE p.id = :id"),
-    @NamedQuery(name = "Personas.findByNombre", query = "SELECT p FROM Personas p WHERE p.nombre = :nombre")})
-public class Personas implements Serializable {
+    @NamedQuery(name = "Personas_1.findAll", query = "SELECT p FROM Personas_1 p"),
+    @NamedQuery(name = "Personas_1.findById", query = "SELECT p FROM Personas_1 p WHERE p.id = :id"),
+    @NamedQuery(name = "Personas_1.findByNombre", query = "SELECT p FROM Personas_1 p WHERE p.nombre = :nombre")})
+public class Personas_1 implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(nullable = false, length = 50)
+    @Column(name = "nombre")
     private String nombre;
 
-    public Personas() {
+    public Personas_1() {
     }
 
-    public Personas(Integer id) {
+    public Personas_1(Integer id) {
         this.id = id;
     }
 
-    public Personas(Integer id, String nombre) {
+    public Personas_1(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -75,10 +75,10 @@ public class Personas implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Personas)) {
+        if (!(object instanceof Personas_1)) {
             return false;
         }
-        Personas other = (Personas) object;
+        Personas_1 other = (Personas_1) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -87,7 +87,7 @@ public class Personas implements Serializable {
 
     @Override
     public String toString() {
-        return "Logica.Personas[ id=" + id + " ]";
+        return "com.mycompany.mavenproject4.Personas_1[ id=" + id + " ]";
     }
     
 }
