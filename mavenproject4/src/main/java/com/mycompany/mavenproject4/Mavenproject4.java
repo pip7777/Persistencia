@@ -1,111 +1,292 @@
 package com.mycompany.mavenproject4;
 
 import com.mycompany.mavenproject4.exceptions.NonexistentEntityException;
-import java.sql.SQLException;
 import java.sql.Connection;
-import java.nio.file.Path;
+import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+/**
+ *
+ * @author Sarah Delgado Martin
+ */
 public class Mavenproject4 {
 
-    public static void main(String[] args) 
-    {
-        System.out.println("Conectando....");
-        
-        String urlH2    = "jdbc:h2:" + Path.of("bbdd").toAbsolutePath().toString();
-        String urlMySQL = "jdbc:mysql://localhost:3306/prueba?zeroDateTimeBehavior=CONVERT_TO_NULL";
-        String user = "user";
-        String pass = "root";
-        
-        // EntityManagerFactory emf = Persistence.createEntityManagerFactory("proj4_persistence"); 
-        // EmpleadoJpaController emp = new EmpleadoJpaController(emf);
-        // System.out.println( "Empleados : " + emp.getEmpleadoCount() );
-        
-        // 0. Crear Connexion
-        // Connection conn = H2Connector.newInstance(urlH2,user,pass);
-        Connection conn = H2Connector.newInstance(urlMySQL,"root","");
-        
+    // Menú
+    public static void main(String[] args) {
+        /*
+        Connection conn = H2Connector.newInstance("jdbc:mysql://localhost:3306/prueba?zeroDateTimeBehavior=CONVERT_TO_NULL", "root", "");
+
         // 0. Crear EntityManagerFactory 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadJPA");
-                
-        try
-        {
-            
+
+        try {
             // 1. Crear Estado
             Statement estado = conn.createStatement();
         
-            // 1. Creo el Controller
-            PersonasJpaController cont = new PersonasJpaController( emf );
+
+            // 1. Departamento
+            DepartamentoJpaController contD = new DepartamentoJpaController(emf);
             
-            Personas per = new Personas();
-            per.setNombre("Maria");
-            per.setId(1000);
-            cont.edit(per);
+            Departamento departamento = new Departamento(1, "Departamento1 ");
+            contD.create(departamento);
             
-            // 2. Crear TABLA
-            String crear = "CREATE TABLE IF NOT EXISTS Personas( id INTEGER PRIMARY KEY AUTO_INCREMENT, nombre VARCHAR(50) NOT NULL )";
-            estado.execute( crear );            
+            // 2. Empleado
+            EmpleadoJpaController contE = new EmpleadoJpaController(emf);
+             
+            Empleado empleado = new Empleado("123456789Z", "Antonio");
+            contE.create(empleado);
             
-            crear = "create table IF NOT EXISTS sede( id_sede integer auto_increment not null, nom_sede char (20) not null, primary key (id_sede) );";
-            estado.execute( crear );            
+            empleado.setIdDepto(departamento);
+            contE.edit(empleado);
             
-            crear = "create table IF NOT EXISTS departamento ( id_depto integer auto_increment not null, nom_depto char (32) not null, id_sede integer not null, primary key (id_depto), CONSTRAINT fk_depto_sede foreign key  (id_sede) references sede (id_sede) );";
-            estado.execute( crear );            
+            // 3. Datos empleado
+            EmpleadoDatosProfJpaController contDatos = new EmpleadoDatosProfJpaController(emf);
             
-            crear = "create table IF NOT EXISTS empleado ( dni char(9) not null,nom_emp char (40) not null,id_depto integer not null, primary key (dni),CONSTRAINT fk_empleado_depto foreign key  (id_depto) references departamento (id_depto) );";
-            estado.execute( crear );            
+            EmpleadoDatosProf datos = new EmpleadoDatosProf();
+        
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Mavenproject4.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Mavenproject4.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         */
+
+        // Variables
+        int eleccion = -1; // Guarda la elección del usuario
+        Scanner teclado = new Scanner(System.in); // Para leer por teclado
+
+        do {
+            System.out.println("Escriba una opción del menú, 0 para salir:\n"
+                    + "1. Empleado.\n"
+                    + "2. Departamento.\n"
+                    + "3. Proyecto.\n"
+                    + "4. Sede.\n");
+            eleccion = teclado.nextInt();
+            teclado.nextLine();
             
-            crear = "create table IF NOT EXISTS empleado_datos_prof (dni char(9) not null,categoria char (2) not null,sueldo_bruto_anual decimal(8,2),primary key (dni), CONSTRAINT fk_empleado_datosprof_empl foreign key (dni) references empleado (dni) );";
-            estado.execute( crear );            
-            
-            crear = "create table IF NOT EXISTS proyecto ( id_proy integer auto_increment not null, f_inicio date not null, f_fin date, nom_proy char (20) not null, primary key (id_proy) );";
-            estado.execute( crear );            
-            
-            crear = "create table IF NOT EXISTS proyecto_sede ( id_proy integer not null, id_sede integer not null, f_inicio date not null, f_fin date, CONSTRAINT pk_proyecto primary key (id_proy, id_sede),CONSTRAINT fk_proysede_proy foreign key (id_proy) references proyecto (id_proy),CONSTRAINT fk_proysede_sede foreign key (id_sede) references sede (id_sede) ); ";
-            estado.execute( crear );            
-            
-            System.out.println("Base de datos creada/actualizada con éxito.");        
-            
-            // 3. INSERTAR DATOS
-            String insert = "INSERT INTO Personas( nombre ) VALUES ('Pepe')";
-            estado.execute( insert );
-            insert = "INSERT INTO Personas( nombre ) VALUES ('Juan')";
-            estado.execute( insert );
-            insert = "INSERT INTO Personas( nombre ) VALUES ('Manolo')";
-            estado.execute( insert );
-            
-            System.out.println("Datos insertados con éxito.");        
-            
-            // 4. INSERTAR DATOS 
-            String buscar = "SELECT id, nombre from Personas";
-            ResultSet set = estado.executeQuery( buscar );
-            
-            while( !set.isLast() )
-            {
-                set.next();                
-                System.out.println(" NOMBRE : " + set.getString(2) );            
+            switch (eleccion) {
+                case 1:
+                    menuEmpleado();
+                    break;
+                case 2:
+                    menuDepartamento();
+                    break;
+                case 3:
+                    menuProyecto();
+                    break;
+                case 4:
+                    menuSede();
+                    break;
+
             }
-            
-            // 5. Cerrar Connexión
-            estado.close();
-            conn.close();
-        }        
-        catch( SQLException ex )
-        {
-            System.out.println("Error creando la conexión" + ex.getMessage() );
-            return;
-        }
-        catch( Exception ex )
-        {
-            System.out.println("Error creando la conexión" + ex.getMessage() );
-            return;
-        }
-        
-        System.out.println("Conexion cerrada con éxito");
-        
-        
+
+        } while (eleccion != 0);
+
     }
-}
+
+    public static void menuEmpleado() {
+        // Variables
+        int eleccion = -1; // Guarda la elección del usuario
+        Scanner teclado = new Scanner(System.in); // Para leer por teclado
+        String dni;
+        String nombre;
+
+        // Crea EntityManagerFactory 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadJPA");
+
+        // Crea el controlador de empleado
+        EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
+
+        // Crea un empleado
+        Empleado empleado = new Empleado();
+
+        do {
+            System.out.println("Escriba una opción del menú, 0 para salir:\n"
+                    + "1. Añadir empleado.\n"
+                    + "2. Modificar empleado.\n"
+                    + "3. Borrar empleado.\n"
+                    + "4. Buscar empleado.\n"
+                    + "5. Mostrar número de empleados totales.\n");
+            eleccion = teclado.nextInt();
+            teclado.nextLine();
+
+            switch (eleccion) {
+                case 1:
+                    System.out.println("Introduzca el dni del empleado: ");
+                    dni = teclado.nextLine();
+                    System.out.println("Introduzca el nombre del empleado: ");
+                    nombre = teclado.nextLine();
+                    System.out.println("Introduzca el código del departamento: ");
+                    Integer iddpto = teclado.nextInt();
+                    teclado.nextLine();
+                    DepartamentoJpaController djc = new DepartamentoJpaController(emf);
+                    Departamento departamento = djc.findDepartamento(iddpto);
+                    empleado.setDni(dni);
+                    empleado.setNomEmp(nombre);
+                    empleado.setIdDepto(departamento);
+                    try {
+                        ejc.create(empleado);
+                        System.out.println("Empleado añadido con éxito.");
+                    } catch (Exception ex) {
+                        System.out.println("No ha sido posible añadir al empleado.");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Introduzca el DNI del empleado a modificar: ");
+                    dni = teclado.nextLine();
+                    System.out.println("Introduzca el nuevo nombre del empleado: ");
+                    nombre = teclado.nextLine();
+                    empleado.setDni(dni);
+                    empleado.setNomEmp(nombre);
+                    try {
+                        ejc.edit(empleado);
+                        System.out.println("Empleado modificado con éxito.");
+                    } catch (NonexistentEntityException ex) {
+                        System.out.println("No existe el empleado.");
+                    } catch (Exception ex) {
+                        System.out.println("No ha sido posible modificar el empleado.");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Introduzca el DNI del empleado a borrar: ");
+                    dni = teclado.nextLine();
+                    try {
+                        ejc.destroy(dni);
+                        System.out.println("Empleado borrado con éxito.");
+                    } catch (NonexistentEntityException ex) {
+                        System.out.println("No existe el empleado.");
+                    } catch (Exception ex) {
+                        System.out.println("No ha sido posible borrar el empleado.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Introduzca el DNI del empleado a buscar: ");
+                    dni = teclado.nextLine();
+                    try {
+                        empleado = ejc.findEmpleado(dni);
+                        System.out.println("DNI: " + empleado.getDni() + "\n" + "Nombre: " + empleado.getNomEmp());
+                    } catch (Exception ex) {
+                        System.out.println("No ha sido posible encontrar el empleado.");
+                    }
+                    break;
+                case 5:
+                    System.out.println("El número total de empleados es " + ejc.getEmpleadoCount() + ".");
+                    break;
+
+            }
+
+        } while (eleccion != 0);
+    }
+
+    public static void menuDepartamento() {
+        // Variables
+        int eleccion = -1; // Guarda la elección del usuario
+        Scanner teclado = new Scanner(System.in); // Para leer por teclado
+        Integer idDpto;
+        String nomDepto;
+        Sede sede;
+
+        // Crea EntityManagerFactory 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadJPA");
+
+        // Crea el controlador de departamento
+        DepartamentoJpaController djc = new DepartamentoJpaController(emf);
+
+        // Crea un empleado
+        Departamento departamento = new Departamento();
+
+        do {
+            System.out.println("Escriba una opción del menú, 0 para salir:\n"
+                    + "1. Añadir departamento.\n"
+                    + "2. Modificar departamento.\n"
+                    + "3. Borrar departamento.\n"
+                    + "4. Buscar departamento.\n"
+                    + "5. Mostrar número de departamentos totales.\n");
+            eleccion = teclado.nextInt();
+            teclado.nextLine();
+
+            switch (eleccion) {
+                case 1:
+                    System.out.println("Introduzca la id del departamento: ");
+                    idDpto = teclado.nextInt();
+                    teclado.nextInt();
+                    System.out.println("Introduzca el nombre del departamento: ");
+                    nomDepto = teclado.nextLine();
+                    System.out.println("Introduzca el código de la sede: ");
+                    Integer iddpto = teclado.nextInt();
+                    teclado.nextLine();
+                    SedeJpaController sjc = new SedeJpaController(emf);
+                    sede = sjc.findSede(iddpto);
+                    departamento.setIdDepto(iddpto);
+                    departamento.setNomDepto(nomDepto);
+                    departamento.setIdSede(sede);
+                    try {
+                        djc.create(departamento);
+                        System.out.println("Departamento añadido con éxito.");
+                    } catch (Exception ex) {
+                        System.out.println("No ha sido posible añadir el departamento.");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Introduzca la id del departamento: ");
+                    idDpto = teclado.nextInt();
+                    teclado.nextInt();
+                    System.out.println("Introduzca el nuevo nombre del departamento: ");
+                    nomDepto = teclado.nextLine();
+                    
+                    try {
+                        ejc.edit(empleado);
+                        System.out.println("Empleado modificado con éxito.");
+                    } catch (NonexistentEntityException ex) {
+                        System.out.println("No existe el empleado.");
+                    } catch (Exception ex) {
+                        System.out.println("No ha sido posible modificar el empleado.");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Introduzca el DNI del empleado a borrar: ");
+                    dni = teclado.nextLine();
+                    try {
+                        ejc.destroy(dni);
+                        System.out.println("Empleado borrado con éxito.");
+                    } catch (NonexistentEntityException ex) {
+                        System.out.println("No existe el empleado.");
+                    } catch (Exception ex) {
+                        System.out.println("No ha sido posible borrar el empleado.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Introduzca el DNI del empleado a buscar: ");
+                    dni = teclado.nextLine();
+                    try {
+                        empleado = ejc.findEmpleado(dni);
+                        System.out.println("DNI: " + empleado.getDni() + "\n" + "Nombre: " + empleado.getNomEmp());
+                    } catch (Exception ex) {
+                        System.out.println("No ha sido posible encontrar el empleado.");
+                    }
+                    break;
+                case 5:
+                    System.out.println("El número total de empleados es " + ejc.getEmpleadoCount() + ".");
+                    break;
+
+            }
+
+        } while (eleccion != 0);
+    }
+    
+
+    public static void menuProyecto() {
+
+    }
+
+    public static void menuSede() {
+
+    }
+
+} // Ebd class
