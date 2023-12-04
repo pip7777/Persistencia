@@ -111,5 +111,5 @@ public class Empleado implements Serializable {
     public String toString() {
         return "Logica.Empleado[ dni=" + dni + " ]";
     }
-    
+
 }
