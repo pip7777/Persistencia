@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="unidadJPA" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>   
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.mycompany.mavenproject4.Personas_1</class>
+    <class>com.mycompany.mavenproject4.Departamento</class>
+    <class>com.mycompany.mavenproject4.EmpleadoDatosProf</class>
+    <class>com.mycompany.mavenproject4.Sede</class>
+    <class>com.mycompany.mavenproject4.Proyecto</class>
+    <class>com.mycompany.mavenproject4.ProyectoSede</class>
+    <class>com.mycompany.mavenproject4.Empleado</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <class>com.mycompany.mavenproject4.Personas</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/prueba?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
-      <property name="javax.persistence.jdbc.user" value="root2"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3310/prueba?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="root2"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-    </properties>    
-  </persistence-unit>  
-  
+      <property name="javax.persistence.jdbc.password" value=""/>
+    </properties>
+  </persistence-unit>
 </persistence>
