@@ -191,6 +191,7 @@ public class Mavenproject4 {
         Integer idDpto;
         String nomDepto;
         Sede sede;
+        Integer idSede;
 
         // Crea EntityManagerFactory 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("unidadJPA");
@@ -213,17 +214,17 @@ public class Mavenproject4 {
 
             switch (eleccion) {
                 case 1:
-                    System.out.println("Introduzca la id del departamento: ");
+                    System.out.println("Introduzca el id del departamento: ");
                     idDpto = teclado.nextInt();
-                    teclado.nextInt();
+                    teclado.nextLine();
                     System.out.println("Introduzca el nombre del departamento: ");
                     nomDepto = teclado.nextLine();
                     System.out.println("Introduzca el código de la sede: ");
-                    Integer iddpto = teclado.nextInt();
+                    idSede = teclado.nextInt();
                     teclado.nextLine();
                     SedeJpaController sjc = new SedeJpaController(emf);
-                    sede = sjc.findSede(iddpto);
-                    departamento.setIdDepto(iddpto);
+                    sede = sjc.findSede(idSede);
+                    departamento.setIdDepto(idSede);
                     departamento.setNomDepto(nomDepto);
                     departamento.setIdSede(sede);
                     try {
@@ -233,46 +234,55 @@ public class Mavenproject4 {
                         System.out.println("No ha sido posible añadir el departamento.");
                     }
                     break;
-                case 2:
-                    System.out.println("Introduzca la id del departamento: ");
+                case 2: 
+                    System.out.println("Introduzca el id del departamento a modificar: ");
                     idDpto = teclado.nextInt();
-                    teclado.nextInt();
+                    teclado.nextLine();
                     System.out.println("Introduzca el nuevo nombre del departamento: ");
                     nomDepto = teclado.nextLine();
-                    
+                    System.out.println("Introduzca el código de la nueva sede del departamento: ");
+                    idSede = teclado.nextInt();
+                    teclado.nextLine();
+                    SedeJpaController sjc2 = new SedeJpaController(emf);
+                    sede = sjc2.findSede(idSede);
+                    departamento.setIdDepto(idDpto);
+                    departamento.setNomDepto(nomDepto);
+                    departamento.setIdSede(sede);
                     try {
-                        ejc.edit(empleado);
+                        djc.edit(departamento);
                         System.out.println("Empleado modificado con éxito.");
                     } catch (NonexistentEntityException ex) {
-                        System.out.println("No existe el empleado.");
+                        System.out.println("No existe el departamento.");
                     } catch (Exception ex) {
-                        System.out.println("No ha sido posible modificar el empleado.");
+                        System.out.println("No ha sido posible modificar el departamento.");
                     }
                     break;
                 case 3:
-                    System.out.println("Introduzca el DNI del empleado a borrar: ");
-                    dni = teclado.nextLine();
+                    System.out.println("Introduzca el id del departamento a borrar: ");
+                    idDpto = teclado.nextInt();
+                    teclado.nextLine();
                     try {
-                        ejc.destroy(dni);
-                        System.out.println("Empleado borrado con éxito.");
+                        djc.destroy(idDpto);
+                        System.out.println("Departamento borrado con éxito.");
                     } catch (NonexistentEntityException ex) {
-                        System.out.println("No existe el empleado.");
+                        System.out.println("No existe el departamento.");
                     } catch (Exception ex) {
-                        System.out.println("No ha sido posible borrar el empleado.");
+                        System.out.println("No ha sido posible borrar el departamento.");
                     }
                     break;
                 case 4:
-                    System.out.println("Introduzca el DNI del empleado a buscar: ");
-                    dni = teclado.nextLine();
+                    System.out.println("Introduzca el id del departamento a buscar: ");
+                    idDpto = teclado.nextInt();
+                    teclado.nextLine();
                     try {
-                        empleado = ejc.findEmpleado(dni);
-                        System.out.println("DNI: " + empleado.getDni() + "\n" + "Nombre: " + empleado.getNomEmp());
+                        departamento = djc.findDepartamento(idDpto);
+                        System.out.println("ID: " + departamento.getIdDepto() + "\n" + "Nombre: " + departamento.getNomDepto() + "\n" + "Sede: "+ departamento.getIdSede());
                     } catch (Exception ex) {
-                        System.out.println("No ha sido posible encontrar el empleado.");
+                        System.out.println("No ha sido posible encontrar el departamento.");
                     }
                     break;
                 case 5:
-                    System.out.println("El número total de empleados es " + ejc.getEmpleadoCount() + ".");
+                    System.out.println("El número total de departamentos es " + djc.getDepartamentoCount()+ ".");
                     break;
 
             }
@@ -289,4 +299,4 @@ public class Mavenproject4 {
 
     }
 
-} // Ebd class
+} // End class
