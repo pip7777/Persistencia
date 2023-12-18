@@ -62,6 +62,7 @@ public class ProyectoSede implements Serializable {
     }
 
     public ProyectoSede(int idProy, int idSede) {
+//        this.proyectoSedePK = new ProyectoSedePK(idProy, idSede);
         this.proyectoSedePK = new ProyectoSedePK(idProy, idSede);
     }
 
@@ -84,6 +85,7 @@ public class ProyectoSede implements Serializable {
     public Date getFFin() {
         return fFin;
     }
+
 
     public void setFFin(Date fFin) {
         this.fFin = fFin;
